@@ -1,0 +1,12 @@
+body{
+    background: darkcyan;
+}
+
+.card{
+    background: white;
+    margin: auto;
+    height: 50%;
+    width: 50%;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 10px;
+}
