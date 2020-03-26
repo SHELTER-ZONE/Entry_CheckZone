@@ -1,12 +1,54 @@
+@import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
+
 body{
-    background: darkcyan;
+    background: url(./foggy-mountains.jpeg);
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 800px;
+    width: 100%;
 }
 
 .card{
-    background: white;
-    margin: auto;
-    height: 50%;
+    color: rgb(80, 80, 80);
+    background: rgb(0,0,0,0);
+    border-radius: 7px;
+    height: 70%;
     width: 50%;
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.19);
-    padding: 10px;
+    position: relative;    
+}
+
+.card h1, p{
+    font-family: ‘cwTeXYen’, sans-serif;
+    margin-left: 20px;
+}
+
+.btns{
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
+
+.btn-container{
+    display: flex;
+    justify-content: center;
+}
+
+
+#next-btn{
+    width: 50%;
+    height: 30px;
+    background: rgb(0,0,0,0);
+    border: none;
+    border-radius: 5px;
+}
+
+#next-btn:hover{
+    background: rgb(0,0,0,0.1);
+    transition: 1s;
 }
