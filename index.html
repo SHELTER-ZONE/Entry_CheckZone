@@ -5,16 +5,18 @@
 	<title>SHELTER ZONE | CheckZone 🚧邊境檢查 - Index</title>
     <link rel="stylesheet" href="./css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="func.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="app">
         <div class="card">
             <div class="card-title">
                 <h1>SHELTER ZONE | CheckZone 🚧邊境檢查</h1>
             </div>
 
             <div class="card-body">
-                <p>自2020/4 月起</p>
+                <p>自2020/4 月起 </p>
                 <p class="block">
                     為防止 無視邊境檢查頻道內容，直接進入伺服器者 <br>
                     統一以外部網站實現強制性閱讀內容
@@ -26,20 +28,18 @@
                     並於Discord - SHELTER ZONE 伺服器內的邊境檢查頻道輸入指令即可
                 </p>
 
+                <p>{{vueMsg}}</p>
+
             </div>
 
             <div class="btns">
                 <div class="btn-container">
-                    <button id="next-btn" onclick="next()">NEXT</button>
+                    
+                    <button id="next-btn"><a href="./pages/page1.html">NEXT</a></button>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        function next() {
-            alert(window.location.href)
-            // location.href = "www.yoursite.com";
-        }
-    </script>
+    
 </body>
 </html>
