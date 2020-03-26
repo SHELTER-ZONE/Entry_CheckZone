@@ -1,4 +1,6 @@
-@import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
+:root{
+    --normal-radius: 5px;
+}
 
 body{
     background: url(./foggy-mountains.jpeg);
@@ -24,8 +26,18 @@ body{
 }
 
 .card h1, p{
-    font-family: ‘cwTeXYen’, sans-serif;
+    /* font-family: ‘cwTeXYen’, sans-serif; */
+    font-family: 'Noto Sans TC', sans-serif;
     margin-left: 20px;
+    margin-right: 20px;
+}
+
+.block{
+    color: white;
+    font-size: 16pt;
+    background: rgba(0,0,0, 0.3);
+    border-radius: var(--normal-radius);
+    padding: 10px;
 }
 
 .btns{
@@ -45,7 +57,7 @@ body{
     height: 30px;
     background: rgb(0,0,0,0);
     border: none;
-    border-radius: 5px;
+    border-radius: var(--normal-radius);
 }
 
 #next-btn:hover{
