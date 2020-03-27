@@ -14,32 +14,18 @@
             <div class="card-title">
                 <h1>SHELTER ZONE | CheckZone 🚧邊境檢查</h1>
             </div>
-
-            <div class="card-body">
-                <p>自2020/4 月起 </p>
-                <p class="block">
-                    為防止 無視邊境檢查頻道內容，直接進入伺服器者 <br>
-                    統一以外部網站實現強制性閱讀內容
-                </p>
-                
-                <p style="font-size: 14pt;">
-                    請按下方 "NEXT" 按鈕依序閱讀內容 <br>
-                    將在最後給予進入伺服器許可的指令 <br>
-                    並於Discord - SHELTER ZONE 伺服器內的邊境檢查頻道輸入指令即可
-                </p>
-
-                <p>{{vueMsg}}</p>
-
-            </div>
-
+            
+            <transition name="component-fade" mode="out-in">
+                <component v-bind:is='show'></component>
+            </transition>
+            
             <div class="btns">
                 <div class="btn-container">
-                    
-                    <button id="next-btn"><a href="./pages/page1.html">NEXT</a></button>
+                    <button id="pre-btn" @click="pre_contain">PRE</button>
+                    <button id="next-btn" @click="next_contain">NEXT</button>
                 </div>
             </div>
         </div>
-    </div>
     
 </body>
 </html>
