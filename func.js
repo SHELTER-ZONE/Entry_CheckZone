@@ -82,14 +82,14 @@ window.onload = function () {
                     <h3> 伺服器規定 </h3>
                     <p> 👻 成員踢除 (幽靈清理機制)</p>
                     <p class="block" >
-                        <span style="color: red;">30天 未進行 "任何互動"(訊息/語音聊天) 及 未上線者</span><br>
-                        <span style="color: rgb(50, 205, 166);;">將於每個 "星期六" 發佈成員欲剔除名單， 並於後日 "星期一" 進行剔除</span><br>
+                        <span style="color: rgb(255, 50, 84);">30天 未進行 "任何互動"(訊息/語音聊天) 及 未上線者</span><br>
+                        <span style="color: rgb(69, 226, 187);">將於每個 "星期六" 發佈成員欲剔除名單， 並於後日 "星期一" 進行剔除</span><br>
                         <span style="font-size: 12pt;">P.S. 剔除後仍可透過邀請連結重新加入，並非封鎖</span>
                     </p>
 
                     <p> 🚫 封鎖 (Ban)</p>
                     <p class="block" >
-                        <span style="color: red;">騷擾/汙辱/惡意攻擊 者</span><br>
+                        <span style="color: rgb(255, 50, 84);">騷擾/汙辱/惡意攻擊 者</span><br>
                         <span style="font-size: 12pt;">經警告3次後，永久封鎖!</span>
                     </p>
                 </div>
