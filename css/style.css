@@ -16,7 +16,7 @@ body{
     align-items: center;
     justify-content: center;
 
-    height: 80vh;
+    /* height: 80vh; */
     width: 100%;
 }
 
@@ -28,6 +28,10 @@ body{
     width: 80%;
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.19);
     position: relative;    
+}
+
+.card-body{
+    margin-bottom: 100px;
 }
 
 .card h1, h2, h3, p{
