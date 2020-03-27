@@ -1,5 +1,6 @@
 :root{
     --normal-radius: 5px;
+    --normal-font: 'Noto Sans TC', sans-serif;
 }
 
 body{
@@ -25,9 +26,9 @@ body{
     position: relative;    
 }
 
-.card h1, h3, p{
+.card h1, h2, h3, p{
     /* font-family: ‘cwTeXYen’, sans-serif; */
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: var(--normal-font);
     margin-left: 20px;
     margin-right: 20px;
 }
@@ -52,27 +53,45 @@ body{
     padding-right: 20px;
 }
 
-#next-btn, #pre-btn{
+#next-btn, #pre-btn, #gen-btn{
+    font-family: var(--normal-font);
     width: 50%;
     height: 30px;
     color: white;
-    background: rgb(0,0,0,0);
+    background: rgba(0,0,0,0);
     outline: none;
     border: none;
     border-radius: var(--normal-radius);
+    transition: 1s;
 }
 
 #next-btn:hover, #pre-btn:hover{
-    background: rgb(0,0,0,0.1);
+    background: rgba(0,0,0,0.1);
+    transition: 1s;
+    /* color: rgb(50, 205, 166); */
+}
+
+#gen-btn{
+    color: white;
+    background: rgba(0,0,0,0.1);
     transition: 1s;
 }
 
-
-#testp{
-    color: yellowgreen;
+#gen-btn:hover{
+    color: rgb(80, 80, 80);
+    background: rgba(69, 226, 213, 0.664);
     transition: 1s;
 }
 
+#gen-btn-container{
+    display: flex;
+    justify-content: center;
+}
+
+#token-show{
+    display: flex;
+    justify-content: center;
+}
 
 .component-fade-enter-active, .component-fade-leave-active {
     transition: opacity .3s ease;
@@ -81,3 +100,6 @@ body{
   /* .component-fade-leave-active for below version 2.1.8 */ {
     opacity: 0;
   }
+
+
+  
