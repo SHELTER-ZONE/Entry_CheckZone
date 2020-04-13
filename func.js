@@ -1,5 +1,4 @@
 window.onload = function () {
-
     Vue.component('card5', {
         data(){
             return {
@@ -58,6 +57,8 @@ window.onload = function () {
         data: {
             show: 'card1',
             current_page: 1,
+            cooldown: true,
+            cd: 10
         },
         components: {
             'card1': {
@@ -69,7 +70,7 @@ window.onload = function () {
                         統一以外部網站實現強制性閱讀內容與認證機制
                     </p>
                     <p style="font-size: 14pt;">
-                        請按下方 "NEXT" 按鈕依序閱讀內容 <br>
+                        請按下方 "NEXT" 按鈕依序閱讀內容 (每個Page 有10秒的冷卻時間)<br>
                         將在最後給予進入伺服器許可的指令 <br>
                         並於Discord - SHELTER ZONE 伺服器內的邊境檢查頻道輸入指令即可
                     </p>
@@ -130,9 +131,16 @@ window.onload = function () {
         },
         methods: {
             next_contain: function () {
+                if (this.current_page != 5) {
+                    this.cooldown = false
+                    setTimeout(() => {
+                        this.cooldown = true
+                    }, 10000);
+                }
+
                 if (this.current_page == 5){return}
                 this.current_page += 1
-                
+
                 if (this.current_page == 2) {this.show = "card2"};
                 if (this.current_page == 3) { this.show = "card3" };
                 if (this.current_page == 4) { this.show = "card4" };
@@ -147,9 +155,7 @@ window.onload = function () {
                 if (this.current_page == 2) { this.show = "card2" };
                 if (this.current_page == 3) { this.show = "card3" };
                 if (this.current_page == 4) {this.show = "card4"};
-            },
-
-            
+            },       
         }
     })
 

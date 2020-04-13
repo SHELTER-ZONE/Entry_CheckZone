@@ -62,7 +62,12 @@ body{
     padding-right: 20px;
 }
 
-#next-btn, #pre-btn, #gen-btn{
+#cooldown{
+    text-align: center;
+    color: lightskyblue;
+}
+
+#next-btn, #pre-btn, #gen-btn, #timer-btn{
     font-family: var(--normal-font);
     width: 50%;
     height: 30px;
@@ -72,6 +77,10 @@ body{
     border: none;
     border-radius: var(--normal-radius);
     transition: 1s;
+}
+
+#timer-btn{
+    color: lightblue;
 }
 
 #next-btn:hover, #pre-btn:hover{
