@@ -58,7 +58,7 @@ window.onload = function () {
             show: 'card1',
             current_page: 1,
             cooldown: true,
-            cd: 10
+            btn_text: 'Cooling Down...'
         },
         components: {
             'card1': {
@@ -131,11 +131,15 @@ window.onload = function () {
         },
         methods: {
             next_contain: function () {
-                if (this.current_page != 5) {
+                if (this.current_page != 4) {
                     this.cooldown = false
                     setTimeout(() => {
                         this.cooldown = true
                     }, 10000);
+                }
+                if (this.current_page == 4) {
+                    this.cooldown = false
+                    this.btn_text = ''
                 }
 
                 if (this.current_page == 5){return}
@@ -148,6 +152,8 @@ window.onload = function () {
             },
 
             pre_contain: function () {
+                this.cooldown = true
+                this.btn_text = 'Cooling Down...'
                 if (this.current_page == 1){return}
                 this.current_page -= 1
 

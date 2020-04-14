@@ -29,7 +29,7 @@
                 <div class="btn-container">
                     <button id="pre-btn" @click="pre_contain">PRE</button>
                     <button id="next-btn" v-if="cooldown" @click="next_contain">NEXT</button>
-                    <button id="timer-btn" v-if="!cooldown">Cooling Down ...</button>
+                    <button id="timer-btn" v-if="!cooldown">{{ btn_text }}</button>
                 </div>
             </div>
         </div>
