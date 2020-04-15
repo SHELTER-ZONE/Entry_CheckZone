@@ -42,6 +42,10 @@ body{
     margin-right: 20px;
 }
 
+.card span{
+    font-size: 12pt;
+}
+
 .block{
     color: white;
     font-size: 16pt;
@@ -119,5 +123,3 @@ body{
     opacity: 0;
   }
 
-
-  
