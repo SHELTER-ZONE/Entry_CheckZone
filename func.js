@@ -155,25 +155,25 @@ window.onload = function () {
         },
         methods: {
             next_contain: function () {
-                if (this.current_page != 4) {
+                if (this.current_page != 5) {
                     this.cooldown = false
                     setTimeout(() => {
                         this.cooldown = true
                     }, 10000);
                 }
-                if (this.current_page == 4) {
+                if (this.current_page == 5) {
                     this.cooldown = false
                     this.btn_text = ''
                 }
 
-                if (this.current_page == 5){return}
+                if (this.current_page == 6){return}
                 this.current_page += 1
 
                 if (this.current_page == 2) {this.show = "card2"};
                 if (this.current_page == 3) { this.show = "card3" };
                 if (this.current_page == 4) { this.show = "card4" };
                 if (this.current_page == 5) { this.show = "card5" };
-                if (this.current_page == 5) {this.show = "card6"};
+                if (this.current_page == 6) {this.show = "card6"};
             },
 
             pre_contain: function () {
