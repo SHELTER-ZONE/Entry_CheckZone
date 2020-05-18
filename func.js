@@ -131,8 +131,8 @@ window.onload = function () {
                         <span >Ex. 誰能幫我畫 xxx 3D模型?</span><br>
                         <br>
                         <span>同時技術交流"大部分"是協助你找到答案或解決方案，而非直接給你答案</span><br>
-                        <span style="color: lightslategrey;">- 我們秉持著給釣竿不給魚的理念</span><br>
-                        <span style="color: lightslategrey;">- 所有問題並不一定代表我們都有能力回答</span><br>
+                        <span style="color: #ecb775;">- 我們秉持著給釣竿不給魚的理念</span><br>
+                        <span style="color: #ecb775;">- 所有問題並不一定代表我們都有能力回答</span><br>
                     </p>
                 </div>
                 `

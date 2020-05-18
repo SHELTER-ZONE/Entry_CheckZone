@@ -4,7 +4,8 @@
 }
 
 body{
-    background: url(./src/foggy-mountains.jpeg);
+    /* background: url(./src/foggy-mountains.jpeg); */
+    background: url(./src/unname.png);
     background-size: cover;                 
     background-repeat:   no-repeat;
     background-position: center center;
@@ -22,8 +23,9 @@ body{
 }
 
 .card{
-    color: rgb(80, 80, 80);
+    color: rgb(45, 45, 45);
     background: rgb(0,0,0,0);
+    font-size: 1.5rem;
     border-radius: 7px;
     height: 80%;
     width: 80%;
@@ -43,7 +45,7 @@ body{
 }
 
 .card span{
-    font-size: 12pt;
+    font-size: 1.2rem;
 }
 
 .block{
