@@ -47,7 +47,7 @@ import Gen_token from '@/components/Gen_token.vue'
                 this.$store.commit('SET_COOLING', true)
                 setTimeout(() => {
                     this.$store.commit('SET_COOLING', false)
-                }, 3000);
+                }, 5000);
             },
             nextpage(){
                 if(this.cooling)return
