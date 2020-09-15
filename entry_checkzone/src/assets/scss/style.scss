@@ -1,0 +1,64 @@
+.card::-webkit-scrollbar{
+    width: 0px;
+}
+
+.section{
+    color: white;
+}
+
+.title{
+    color: white;
+    font-size: 22px;
+    margin-top: 30px;
+}
+
+.title-2{
+    font-size: 18px;
+    margin-top: 30px;
+}
+
+p{
+    margin-bottom: 10px;
+}
+
+.checkbox-wrapper{
+    margin-bottom: 10px;
+    color: rgb(194, 236, 194);
+}
+
+.block{
+    color: lightblue;
+    margin-top: 5px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 15px;
+    background-color: rgba(255,255,255,.15);
+}
+
+.link-card{
+    margin-top: 30px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 15px;
+    background-color: rgba(255,255,255,.15);
+}
+
+.important{
+    color: rgb(233, 53, 107);
+    text-shadow: 1px 1px 1px rgb(41, 41, 41);
+}
+
+.warn{
+    font-size: 20px;
+    color: orange;
+    text-shadow: 1px 1px 1px rgb(41, 41, 41);
+}
+
+.notice{
+    font-size: 14px;
+    color: skyblue;
+}
+
+.cooler{
+    color: springgreen;
+}
