@@ -7,5 +7,9 @@ export default defineConfig({
   plugins: [
     vue(),
     WindiCSS(),
-  ]
+  ],
+  base: '/Entry_CheckZone/',
+  build:{
+    outDir: 'docs'
+  }
 })

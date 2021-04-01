@@ -1,5 +1,5 @@
 <template>
-  <p class="text-cool-gray-400">SHELTER ZONE - 邊境檢查</p>
+  <p class="text-4xl text-cool-gray-400 m-10">SHELTER ZONE - 🚧 邊境檢查</p>
 
   <div class="gate-column">
     <Gate title="Client Information">
@@ -44,21 +44,61 @@
 
   <!-- Gate 3-4 -->
   <div class="gate-column">
-    <Gate title="Gate 03 - 認證使用者 Discord ID" class="mb-2" 
+    <Gate title="Gate 03 - 避難者條款" 
       gate="3" 
+      class="mb-2"
+      :stage="formData.curGate"
+      :error="gateError.terms">
+      <p class="description">請依照提示重複輸入文字</p>
+      
+      <div class="input-container">
+        <input type="text" 
+          v-for="term, index in formData.terms" :key="term.placeholder"
+          :placeholder="term.placeholder" 
+          v-model="formData.terms[index].value"
+          class="form-input"
+          :class="{
+            'error-input':formData.terms[index].value !== formData.terms[index].placeholder,
+            'right-input':formData.terms[index].value === formData.terms[index].placeholder
+          }"
+          >
+      </div>
+
+      <hr class="mb-2 border-gray-400">
+
+      <div class="other-notice mb-5">
+        <p class="text-lg mb-2">其他注意事項:</p>
+        <p>1. 不要在任何分享性質頻道閒聊與問答</p>
+        <p>2. 除非問題涉及隱私，否則別亂私訊他人</p>
+        <p>3. 拜託，當個有素質的正常人</p>
+      </div>
+        
+
+        <p>如違反以上規定，且不聽從管理員勸告指示者，一律永Ban</p>
+
+        <div class="checkbox-container">
+          <input type="checkbox" id="agree" 
+            v-model="formData.agree" 
+            class="mx-5"
+            @change="termsCheck">
+          <label for="agree" >我同意以上條款</label>
+        </div>
+    </Gate>
+
+    <Gate title="Gate 04 - 認證碼" class="mb-2" 
+      gate="4" 
       :stage="formData.curGate">
-      <p class="description">請先加入Discord伺服器</p>
+      <p class="description">於伺服器 💾terminal 頻道輸入 atid 指令可獲取自己的Discord ID</p>
+      <p class="description">請確實輸入ID，否則產生的驗證碼為無效驗證碼</p>
+      <input type="text" 
+        class="form-input"
+        v-model="formData.userID"
+        placeholder="此輸入你的 Discord ID" >
+        <button>產生驗證碼</button>
+      <p>{{formData.userinfo}}</p>
     </Gate>
     
-    <Gate title="Gate 04 - 避難者條款" gate="4" :stage="formData.curGate">
-      <p class="description">請依照提示重複輸入文字</p>
-      <div class="input-container">
-        <input type="text" placeholder="禁止引戰、謾罵、洗頻" class="form-input">
-        <input type="text" placeholder="減少不雅用詞" class="form-input">
-        <input type="text" placeholder="尊重與遵從管理員其指示" class="form-input">
-        <input type="text" placeholder="保持與頻道主題相符的話題" class="form-input">
-      </div>
-    </Gate>
+
   </div>
 
 </template>
@@ -71,9 +111,12 @@ import evnData from './assets/evnData.json'
 import Gate from '/src/components/Gate.vue'
 
 
+//:: Data
+const serverLink = ref("")
+
 const clientInfo = reactive({
   ip: "Loading...",
-  country: "Loading..."
+  country: "Loading...",
 })
 
 const formData = reactive({
@@ -96,16 +139,41 @@ const formData = reactive({
       selected: false
     }
   ],
-  
+  userID: '',
+  user:{
+    name:String,
+    discriminator: String,
+    bot: Boolean
+  },
+  terms:[
+    {
+      placeholder: '禁止引戰、謾罵、洗頻',
+      value: '',
+    },
+    {
+      placeholder: '減少不雅用詞',
+      value: '',
+    },
+    {
+      placeholder: '尊重與遵從管理員其指示',
+      value: '',
+    },
+    {
+      placeholder: '保持頻道主題相符話題',
+      value: '',
+    }
+  ],
+  agree: false
 })
 
 const gateError = reactive({
-  source: false
+  source: false,
+  terms: false,
 })
 
-const serverLink = ref("")
 
-
+//:: Gate Logic
+// 選擇來源
 const selectSource = (index)=>{
   const current = formData.inviteSource[index].selected
   formData.inviteSource[index].selected = !current
@@ -128,7 +196,20 @@ const sourceCheck = ()=>{
     gateError.source = false
   }
 }
-
+const termsCheck = ()=>{
+  for(const term of formData.terms){
+    const text = term.value.trim()
+    if(text === '' || text !== term.placeholder){
+      gateError.terms = true
+      formData.agree = false
+      return
+    }else{
+      gateError.terms = false
+      formData.curGate = 4
+    }
+  }
+}
+//:: Utils
 // 取得使用者IP地址國家
 const getClientInfo = () => {
   axios.get('https://api.ipify.org?format=json')
@@ -141,10 +222,12 @@ const getClientInfo = () => {
 
 onMounted(()=>{
   // getClientInfo()  
-  axios.get(evnData.szData)
-    .then(res=>{
-      serverLink.value = res.data['invite_link']
-    })
+
+  // axios.get(evnData.szData)
+  //   .then(res=>{
+  //     serverLink.value = res.data['invite_link']
+  //   })
+
 })
 </script>
 
@@ -169,8 +252,20 @@ body{
   @apply text-teal-400 bg-cool-gray-700 focus:border-b-1  focus:border-cool-gray-400 focus:text-gray-100 outline-none  px-2 m-2
 }
 
+.error-input{
+  @apply border-b-1 border-rose-500 text-rose-500
+}
+
+.right-input{
+  @apply border-b-1 border-teal-400
+}
+
 .input-container{
-  @apply flex flex-wrap justify-around
+  @apply flex flex-wrap justify-around sm:block mb-5
+}
+
+.other-notice{
+  @apply text-gray-400
 }
 
 .btn{
@@ -181,6 +276,10 @@ body{
   @apply flex flex-wrap w-3/4 w-full
 }
 
+.checkbox-container{
+  @apply border-gray-400 border-1 text-center mt-5 rounded-sm p-1
+}
+
 .selected{
   @apply bg-teal-400 border-teal-400 text-cool-gray-700
 }
@@ -188,6 +287,8 @@ body{
 .description{
   @apply text-gray-500 mb-5
 }
+
+
 
 
 </style>
