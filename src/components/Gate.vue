@@ -3,7 +3,8 @@
     :class="{
       'disable-stage':stage < Number(gate),
       'current-stage':stage === Number(gate),
-      'complete-stage':stage > Number(gate)
+      'complete-stage':!error && stage > Number(gate),
+      'error-stage':error,
     }">
     <p class="card-title">{{title}}</p>
     
@@ -22,8 +23,9 @@ import { defineProps } from "vue";
 defineProps({
   title: String,
   content: String,
-  gate: Number,
-  stage: Number
+  gate: String,
+  stage: Number,
+  error: false,
 })
 
 </script>
@@ -53,7 +55,12 @@ defineProps({
   @apply border-gray-400 border-2
 }
 
+.error-stage{
+  @apply border-rose-500 border-2
+}
+
 .disable-stage{
   @apply pointer-events-none opacity-opacity-30
 }
+
 </style>

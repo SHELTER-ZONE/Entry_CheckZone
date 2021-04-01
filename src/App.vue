@@ -24,7 +24,10 @@
       </a>
     </Gate>
 
-    <Gate title="Gate 02 - 來源管道" class="sm:ml-1.5" gate="2" :stage="formData.curGate">
+    <Gate title="Gate 02 - 來源管道" class="sm:ml-1.5" 
+      gate="2" 
+      :stage="formData.curGate" 
+      :error="gateError.source">
       <p class="description">從何來到此處</p>
       <div class="btn-container">
         <div class="btn"
@@ -41,7 +44,9 @@
 
   <!-- Gate 3-4 -->
   <div class="gate-column">
-    <Gate title="Gate 03 - 認證使用者 Discord ID" class="mb-2" gate="3" :stage="formData.curGate">
+    <Gate title="Gate 03 - 認證使用者 Discord ID" class="mb-2" 
+      gate="3" 
+      :stage="formData.curGate">
       <p class="description">請先加入Discord伺服器</p>
     </Gate>
     
@@ -72,7 +77,7 @@ const clientInfo = reactive({
 })
 
 const formData = reactive({
-  curGate:1,
+  curGate:2,
   inviteSource: [
     {
       name: '巴哈文章',
@@ -90,14 +95,38 @@ const formData = reactive({
       name: 'Google',
       selected: false
     }
-  ]
+  ],
+  
 })
+
+const gateError = reactive({
+  source: false
+})
+
 const serverLink = ref("")
 
 
 const selectSource = (index)=>{
   const current = formData.inviteSource[index].selected
   formData.inviteSource[index].selected = !current
+  formData.curGate = 3
+
+  sourceCheck()
+}
+
+//:: Gate Check
+const sourceCheck = ()=>{
+  let count = 0
+  
+  for(const source of formData.inviteSource){
+    if(source.selected) count += 1
+  }
+
+  if(count === 0){
+    gateError.source = true
+  } else{
+    gateError.source = false
+  }
 }
 
 // 取得使用者IP地址國家
