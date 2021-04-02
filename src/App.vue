@@ -94,8 +94,10 @@
         class="form-input"
         v-model="formData.userID"
         placeholder="此輸入你的 Discord ID" >
-        <button>產生驗證碼</button>
+        <button @click="generateToken">產生驗證碼</button>
       <p>{{formData.userinfo}}</p>
+      <p class="text-gray-400 mt-2">於伺服器 💾terminal 頻道輸入指令 p\check 你的驗證碼</p>
+      <p class="text-cyan-500">範例: p\check 8238932</p>
     </Gate>
     
 
@@ -120,7 +122,7 @@ const clientInfo = reactive({
 })
 
 const formData = reactive({
-  curGate:2,
+  curGate:4,
   inviteSource: [
     {
       name: '巴哈文章',
@@ -182,6 +184,16 @@ const selectSource = (index)=>{
   sourceCheck()
 }
 
+const generateToken = ()=>{
+  const id = formData.userID
+  const country = clientInfo.country.trim()
+  axios.post(evnData.encodeAPI, {data:`${country} ${id}`})
+  .then(res=>{
+    console.log(res)
+  })
+}
+
+
 //:: Gate Check
 const sourceCheck = ()=>{
   let count = 0
@@ -220,13 +232,14 @@ const getClientInfo = () => {
     })
 }
 
-onMounted(()=>{
-  // getClientInfo()  
 
-  // axios.get(evnData.szData)
-  //   .then(res=>{
-  //     serverLink.value = res.data['invite_link']
-  //   })
+onMounted(()=>{
+  getClientInfo()  
+
+  axios.get(evnData.szData)
+    .then(res=>{
+      serverLink.value = res.data['invite_link']
+    })
 
 })
 </script>
@@ -237,7 +250,7 @@ body{
 }
 
 #app{
-  @apply flex flex-col justify-center items-center
+  @apply flex flex-col justify-center items-center mb-20
 }
 
 .gate-row{
