@@ -95,10 +95,12 @@
         v-model="formData.userID"
         placeholder="此輸入你的 Discord ID" >
         <button @click="generateToken">產生驗證碼</button>
-      <p>{{formData.userinfo}}</p>
-      <p class="text-gray-400 mt-2">於伺服器 💾terminal 頻道輸入指令 p\check 你的驗證碼</p>
-      <p class="text-cyan-500">範例: p\check 8238932</p>
+      <p v-if="token !== ''">你的驗證碼: <span class="text-orange-400">{{token}}</span></p>
+      <p class="text-gray-400 mt-2">於伺服器 💾terminal 頻道輸入指令 p\check + 你的驗證碼</p>
+      <p class="text-cyan-500">範例: p\check 8@2f89%2</p>
     </Gate>
+
+    <p class="text-gray-400">如有任何指令或驗證碼無法運作，請聯繫管理員或Proladon#7525</p>
     
 
   </div>
@@ -115,6 +117,7 @@ import Gate from '/src/components/Gate.vue'
 
 //:: Data
 const serverLink = ref("")
+const token = ref("")
 
 const clientInfo = reactive({
   ip: "Loading...",
@@ -122,7 +125,7 @@ const clientInfo = reactive({
 })
 
 const formData = reactive({
-  curGate:4,
+  curGate:2,
   inviteSource: [
     {
       name: '巴哈文章',
@@ -185,11 +188,14 @@ const selectSource = (index)=>{
 }
 
 const generateToken = ()=>{
+  const proxy = evnData.proxy
   const id = formData.userID
   const country = clientInfo.country.trim()
-  axios.post(evnData.encodeAPI, {data:`${country} ${id}`})
+  token.value = "產生中...請稍後"
+  axios.post(proxy + evnData.encodeAPI, {data:`${country} ${id}`})
   .then(res=>{
-    console.log(res)
+    console.log(res.data)
+    token.value = res.data
   })
 }
 
