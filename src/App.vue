@@ -125,7 +125,7 @@ const clientInfo = reactive({
 })
 
 const formData = reactive({
-  curGate:2,
+  curGate:1,
   inviteSource: [
     {
       name: '巴哈文章',
@@ -144,6 +144,7 @@ const formData = reactive({
       selected: false
     }
   ],
+  source: '',
   userID: '',
   user:{
     name:String,
@@ -160,7 +161,7 @@ const formData = reactive({
       value: '',
     },
     {
-      placeholder: '尊重與遵從管理員其指示',
+      placeholder: '尊重與遵從管理員指示',
       value: '',
     },
     {
@@ -180,8 +181,12 @@ const gateError = reactive({
 //:: Gate Logic
 // 選擇來源
 const selectSource = (index)=>{
+  formData.inviteSource.forEach(source => source.selected = false);
   const current = formData.inviteSource[index].selected
   formData.inviteSource[index].selected = !current
+  
+  formData.source = formData.inviteSource[index].name
+  
   formData.curGate = 3
 
   sourceCheck()
@@ -191,11 +196,26 @@ const generateToken = ()=>{
   const proxy = evnData.proxy
   const id = formData.userID
   const country = clientInfo.country.trim()
+  const source = formData.source
   token.value = "產生中...請稍後"
-  axios.post(proxy + evnData.encodeAPI, {data:`${country} ${id}`})
+
+
+  axios.post(proxy + evnData.encodeAPI, {
+    data:`${country} ${id} ${source}`
+  })
   .then(res=>{
+    
     console.log(res.data)
     token.value = res.data
+
+    
+  })
+  .catch(err=>{
+    if(err.response.data === 'ValueError'){
+      token.value = "ID格式錯誤"
+    }else{
+      token.value = "伺服器錯誤，請聯絡管理員"
+    }
   })
 }
 
