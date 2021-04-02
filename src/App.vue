@@ -125,7 +125,7 @@ const clientInfo = reactive({
 })
 
 const formData = reactive({
-  curGate:1,
+  curGate:4,
   inviteSource: [
     {
       name: '巴哈文章',
@@ -153,7 +153,7 @@ const formData = reactive({
   },
   terms:[
     {
-      placeholder: '禁止引戰、謾罵、洗頻',
+      placeholder: '禁止引戰/謾罵/洗頻',
       value: '',
     },
     {
@@ -193,14 +193,14 @@ const selectSource = (index)=>{
 }
 
 const generateToken = ()=>{
-  const proxy = evnData.proxy
+  // const proxy = evnData.proxy
   const id = formData.userID
   const country = clientInfo.country.trim()
   const source = formData.source
   token.value = "產生中...請稍後"
 
 
-  axios.post(proxy + evnData.encodeAPI, {
+  axios.post(evnData.encodeAPI, {
     data:`${country} ${id} ${source}`
   })
   .then(res=>{
