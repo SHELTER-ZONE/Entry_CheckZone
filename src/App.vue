@@ -5,6 +5,7 @@
     <Gate title="Client Information">
       <p>IP: <span class="text-teal-400">{{clientInfo.ip}}</span></p>
       <p>Country: <span class="text-teal-400">{{clientInfo.country}}</span></p>
+      <p v-if="clientInfo.error !== ''" class="text-rose-500">{{clientInfo.error}}</p>
     </Gate>
   </div>
 
