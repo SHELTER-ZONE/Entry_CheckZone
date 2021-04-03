@@ -120,6 +120,7 @@ const token = ref("")
 const clientInfo = reactive({
   ip: "Loading...",
   country: "Loading...",
+  error: ""
 })
 
 const formData = reactive({
@@ -272,12 +273,18 @@ const idCheck = ()=>{
 const getClientInfo = () => {
   axios.get('https://api.ipify.org?format=json')
     .then(async res => {
-      const ipData = await ipLocation(res.data.ip)
       clientInfo.ip = res.data.ip
-      clientInfo.country = ipData.country.name
+      try{
+        const ipData = await ipLocation(res.data.ip)
+        clientInfo.country = ipData.country.name
+      }catch (err){
+        console.log(err)
+        clientInfo.err = err
+      }
     })
     .catch(err=>{
       console.log(err)
+      clientInfo.err = err
     })
 }
 
