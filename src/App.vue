@@ -72,7 +72,6 @@
         <p>2. 除非問題涉及隱私，否則別亂私訊他人</p>
         <p>3. 拜託，當個有素質的正常人</p>
       </div>
-        
 
         <p>如違反以上規定，且不聽從管理員勸告指示者，一律永Ban</p>
 
@@ -101,7 +100,6 @@
     </Gate>
 
     <p class="text-gray-400">如有任何指令或驗證碼無法運作，請聯繫管理員或Proladon#7525</p>
-    
 
   </div>
 
@@ -192,23 +190,24 @@ const selectSource = (index)=>{
   sourceCheck()
 }
 
+// 產生驗證碼
 const generateToken = ()=>{
-  // const proxy = evnData.proxy
   const id = formData.userID
   const country = clientInfo.country.trim()
   const source = formData.source
-  token.value = "產生中...請稍後"
 
+  const check = idCheck()
+  console.log(check)
+  if(!check) return
+  token.value = "認證碼產生中...請稍後"
 
+  // Call Encode API
   axios.post(evnData.encodeAPI, {
     data:`${country} ${id} ${source}`
   })
   .then(res=>{
-    
     console.log(res.data)
     token.value = res.data
-
-    
   })
   .catch(err=>{
     if(err.response.data === 'ValueError'){
@@ -247,6 +246,27 @@ const termsCheck = ()=>{
     }
   }
 }
+const idCheck = ()=>{
+  const userID = formData.userID.trim()
+
+  if(userID === ''){
+    token.value = "請輸入你的 Discord ID"
+    return false
+  }
+  else if(isNaN(+userID)){
+    token.value = "ID 格式錯誤"
+    return false
+  }
+  else if(userID.length < 18){
+    token.value = "ID 格式錯誤"
+    return false
+  }
+  else{
+    return true
+  }
+}
+
+
 //:: Utils
 // 取得使用者IP地址國家
 const getClientInfo = () => {
@@ -255,6 +275,9 @@ const getClientInfo = () => {
       const ipData = await ipLocation(res.data.ip)
       clientInfo.ip = res.data.ip
       clientInfo.country = ipData.country.name
+    })
+    .catch(err=>{
+      console.log(err)
     })
 }
 
