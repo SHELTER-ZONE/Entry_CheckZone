@@ -96,6 +96,7 @@
         placeholder="此輸入你的 Discord ID" >
         <button @click="generateToken">產生驗證碼</button>
       <p v-if="token !== ''">你的驗證碼: <span class="text-orange-400">{{token}}</span></p>
+      <p v-if="cooling.isCooling" class="text-teal-400">{{cooling.msg}}</p>
       <p class="text-gray-400 mt-2">於伺服器 💾terminal 頻道輸入指令 p\check + 你的驗證碼</p>
       <p class="text-cyan-500">範例: p\check 8@2f89%2</p>
     </Gate>
@@ -117,6 +118,11 @@ import Gate from '/src/components/Gate.vue'
 //:: Data
 const serverLink = ref("")
 const token = ref("")
+const cooling = reactive({
+  coolDown: 10,
+  isCooling: false,
+  msg: '',
+})
 
 const clientInfo = reactive({
   ip: "Loading...",
@@ -199,8 +205,9 @@ const generateToken = ()=>{
   const source = formData.source
 
   const check = idCheck()
-  console.log(check)
-  if(!check) return
+  if(!check || cooling.isCooling) return
+
+
   token.value = "認證碼產生中...請稍後"
 
   // Call Encode API
@@ -210,13 +217,11 @@ const generateToken = ()=>{
   .then(res=>{
     console.log(res.data)
     token.value = res.data
+    throttle() // 請求發送油門 (避免大量請求)
   })
   .catch(err=>{
-    if(err.response.data === 'ValueError'){
-      token.value = "ID格式錯誤"
-    }else{
-      token.value = "伺服器錯誤，請聯絡管理員"
-    }
+    console.log(err)
+    token.value = "伺服器錯誤，請聯絡管理員"
   })
 }
 
@@ -290,6 +295,28 @@ const getClientInfo = () => {
 }
 
 
+// 請求發送油門 (避免大量請求)
+const throttle = ()=>{
+  console.log("cooling...")
+  cooling.isCooling = true
+  let count = cooling.coolDown
+  
+  // 倒數 cooldown 時間
+  for(let i=0; i < cooling.coolDown; i++){
+    setTimeout(()=>{
+      count -= 1
+      if(count === 0){
+        cooling.msg = ''
+        cooling.isCooling = false
+      }else{
+        cooling.msg = `冷卻中...${count}`
+      }
+    }, i*1000)
+  }
+}
+
+
+
 onMounted(()=>{
   getClientInfo()  
 
@@ -297,7 +324,6 @@ onMounted(()=>{
     .then(res=>{
       serverLink.value = res.data['invite_link']
     })
-
 })
 </script>
 
