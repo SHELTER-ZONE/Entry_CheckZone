@@ -5,7 +5,6 @@
     <Gate title="Client Information">
       <p>IP: <span class="text-teal-400">{{clientInfo.ip}}</span></p>
       <p>Country: <span class="text-teal-400">{{clientInfo.country}}</span></p>
-      <p v-if="clientInfo.error !== ''" class="text-rose-500">{{clientInfo.error}}</p>
     </Gate>
   </div>
 
@@ -103,6 +102,8 @@
 
     <p class="text-gray-400">如有任何指令或驗證碼無法運作，請聯繫管理員或Proladon#7525</p>
 
+    <Dialog v-if="clientInfo.error" @manualCountry="updateCountry" />
+
   </div>
 
 </template>
@@ -113,6 +114,7 @@ import axios from 'axios'
 import { onMounted, reactive, ref } from 'vue';
 import evnData from './assets/evnData.json'
 import Gate from '/src/components/Gate.vue'
+import Dialog from '/src/components/Dialog.vue'
 
 
 //:: Data
@@ -127,7 +129,7 @@ const cooling = reactive({
 const clientInfo = reactive({
   ip: "Loading...",
   country: "Loading...",
-  error: ""
+  error: false
 })
 
 const formData = reactive({
@@ -240,6 +242,7 @@ const sourceCheck = ()=>{
     gateError.source = false
   }
 }
+
 const termsCheck = ()=>{
   for(const term of formData.terms){
     const text = term.value.trim()
@@ -290,8 +293,14 @@ const getClientInfo = () => {
     })
     .catch(err=>{
       console.log(err)
-      clientInfo.err = err
+      clientInfo.err = true
     })
+}
+
+
+const updateCountry = (e) => {
+  clientInfo.country = e
+  clientInfo.error = false
 }
 
 
@@ -327,61 +336,61 @@ onMounted(()=>{
 })
 </script>
 
-<style>
+<style lang="postcss">
 body{
-  @apply bg-cool-gray-800
+  @apply bg-cool-gray-800;
 }
 
 #app{
-  @apply flex flex-col justify-center items-center mb-20
+  @apply flex flex-col justify-center items-center mb-20;
 }
 
 .gate-row{
-  @apply flex flex-col w-3/4 sm:flex-row sm:w-2/4 
+  @apply flex flex-col w-3/4 sm:flex-row sm:w-2/4;
 }
 
 .gate-column{
-  @apply flex flex-col items-center justify-center w-3/4 sm:w-2/4
+  @apply flex flex-col items-center justify-center w-3/4 sm:w-2/4;
 }
 
 .form-input{
-  @apply text-teal-400 bg-cool-gray-700 focus:border-b-1  focus:border-cool-gray-400 focus:text-gray-100 outline-none  px-2 m-2
+  @apply text-teal-400 bg-cool-gray-700 focus:border-b-1  focus:border-cool-gray-400 focus:text-gray-100 outline-none  px-2 m-2;
 }
 
 .error-input{
-  @apply border-b-1 border-rose-500 text-rose-500
+  @apply border-b-1 border-rose-500 text-rose-500;
 }
 
 .right-input{
-  @apply border-b-1 border-teal-400
+  @apply border-b-1 border-teal-400;
 }
 
 .input-container{
-  @apply flex flex-wrap justify-around sm:block mb-5
+  @apply flex flex-wrap justify-around sm:block mb-5;
 }
 
 .other-notice{
-  @apply text-gray-400
+  @apply text-gray-400;
 }
 
 .btn{
-  @apply text-gray-400 border-gray-400 border-1 px-4 w-1/2 cursor-pointer text-center select-none
+  @apply text-gray-400 border-gray-400 border-1 px-4 w-1/2 cursor-pointer text-center select-none;
 }
 
 .btn-container{
-  @apply flex flex-wrap w-3/4 w-full
+  @apply flex flex-wrap w-3/4 w-full;
 }
 
 .checkbox-container{
-  @apply border-gray-400 border-1 text-center mt-5 rounded-sm p-1
+  @apply border-gray-400 border-1 text-center mt-5 rounded-sm p-1;
 }
 
 .selected{
-  @apply bg-teal-400 border-teal-400 text-cool-gray-700
+  @apply bg-teal-400 border-teal-400 text-cool-gray-700;
 }
 
 .description{
-  @apply text-gray-500 mb-5
+  @apply text-gray-500 mb-5;
 }
 
 
