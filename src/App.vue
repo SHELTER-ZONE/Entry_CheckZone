@@ -132,8 +132,9 @@ const clientInfo = reactive({
   error: false
 })
 
+
 const formData = reactive({
-  curGate:1,
+  curGate: 1,
   inviteSource: [
     {
       name: '巴哈文章',
@@ -180,6 +181,7 @@ const formData = reactive({
   agree: false
 })
 
+
 const gateError = reactive({
   source: false,
   terms: false,
@@ -200,6 +202,7 @@ const selectSource = (index)=>{
   sourceCheck()
 }
 
+
 // 產生驗證碼
 const generateToken = ()=>{
   const id = formData.userID
@@ -214,7 +217,11 @@ const generateToken = ()=>{
 
   // Call Encode API
   axios.post(evnData.encodeAPI, {
-    data:`${country} ${id} ${source}`
+    data:{
+      country,
+      id,
+      source
+    }
   })
   .then(res=>{
     console.log(res.data)
@@ -243,6 +250,7 @@ const sourceCheck = ()=>{
   }
 }
 
+
 const termsCheck = ()=>{
   for(const term of formData.terms){
     const text = term.value.trim()
@@ -256,6 +264,8 @@ const termsCheck = ()=>{
     }
   }
 }
+
+
 const idCheck = ()=>{
   const userID = formData.userID.trim()
 
@@ -298,6 +308,7 @@ const getClientInfo = () => {
 }
 
 
+// 手動選擇國家
 const updateCountry = (e) => {
   clientInfo.country = e
   clientInfo.error = false
