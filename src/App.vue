@@ -209,6 +209,11 @@ const generateToken = ()=>{
   const country = clientInfo.country.trim()
   const source = formData.source
 
+  if (country === 'Loading...') {
+    clientInfo.error = true
+    return
+  }
+
   const check = idCheck()
   if(!check || cooling.isCooling) return
 
@@ -338,7 +343,7 @@ const throttle = ()=>{
 
 
 onMounted(()=>{
-  getClientInfo()  
+  // getClientInfo()  
 
   axios.get(evnData.szData)
     .then(res=>{
