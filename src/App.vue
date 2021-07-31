@@ -343,7 +343,7 @@ const throttle = ()=>{
 
 
 onMounted(()=>{
-  // getClientInfo()  
+  getClientInfo();
 
   axios.get(evnData.szData)
     .then(res=>{
