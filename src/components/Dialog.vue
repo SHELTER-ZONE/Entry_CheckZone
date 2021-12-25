@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { defineEmit, ref } from 'vue'
+import { ref } from 'vue'
 import countrys from '../assets/countrys.json'
 const countrysList = countrys.countrys
 const selectedCountry = ref(countrys.countrys[0])

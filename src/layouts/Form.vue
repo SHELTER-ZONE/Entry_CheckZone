@@ -111,6 +111,7 @@ import { onMounted, reactive, ref } from 'vue';
 import evnData from '../assets/evnData.json'
 import Gate from '/src/components/Gate.vue'
 import Dialog from '/src/components/Dialog.vue'
+import {encode} from '../api/index'
 
 
 //:: Data
@@ -200,10 +201,11 @@ const selectSource = (index)=>{
 
 
 // 產生驗證碼
-const generateToken = ()=>{
+const generateToken = async()=>{
   const id = formData.userID
   const country = clientInfo.country.trim()
   const source = formData.source
+  const ip = clientInfo.ip
 
   if (country === 'Loading...') {
     clientInfo.error = true
@@ -217,22 +219,19 @@ const generateToken = ()=>{
   token.value = "認證碼產生中...請稍後"
 
   // Call Encode API
-  axios.post(evnData.encodeAPI, {
-    data:{
-      country,
-      id,
-      source
-    }
+  const [res, err] = await encode({
+    country,
+    id,
+    source,
+    ip,
   })
-  .then(res=>{
-    console.log(res.data)
-    token.value = res.data
-    throttle() // 請求發送油門 (避免大量請求)
-  })
-  .catch(err=>{
+  if(err) {
     console.log(err)
     token.value = "伺服器錯誤，請聯絡管理員"
-  })
+    return
+  }
+  token.value = res.data
+  throttle() // 請求發送油門 (避免大量請求)
 }
 
 

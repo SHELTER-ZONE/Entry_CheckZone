@@ -1,12 +1,12 @@
 <template>
   <p class="text-4xl text-cool-gray-400 m-10">SHELTER ZONE - 🚧 邊境檢查</p>
 
-  <Maintenance />
+  <Form />
 </template>
 
 <script setup>
-import Form from "./layouts/Form.vue";
-import Maintenance from "./layouts/Maintenance.vue";
+import Form from "./layouts/Form.vue"
+// import Maintenance from "./layouts/Maintenance.vue";
 </script>
 
 <style lang="postcss">
