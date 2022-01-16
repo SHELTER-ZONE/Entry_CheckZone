@@ -201,36 +201,40 @@ const selectSource = (index)=>{
 
 
 // 產生驗證碼
-const generateToken = async()=>{
+const generateToken = async( )=> {
   const id = formData.userID
-  const country = clientInfo.country.trim()
+  const country = null
   const source = formData.source
-  const ip = clientInfo.ip
+  const ip = null
 
   if (country === 'Loading...') {
     clientInfo.error = true
+    
     return
   }
 
   const check = idCheck()
   if(!check || cooling.isCooling) return
 
-
   token.value = "認證碼產生中...請稍後"
 
   // Call Encode API
   const [res, err] = await encode({
-    country,
+    country: country || 'Taiwan',
     id,
     source,
-    ip,
+    ip: ip || '0.0.0.0'
   })
+
   if(err) {
     console.log(err)
     token.value = "伺服器錯誤，請聯絡管理員"
+    
     return
   }
+
   token.value = res.data
+
   throttle() // 請求發送油門 (避免大量請求)
 }
 
