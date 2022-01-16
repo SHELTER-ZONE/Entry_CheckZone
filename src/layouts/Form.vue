@@ -1,8 +1,8 @@
 <template>
   <div class="gate-column">
     <Gate title="Client Information">
-      <p>IP: <span class="text-teal-400">{{clientInfo.ip}}</span></p>
-      <p>Country: <span class="text-teal-400">{{clientInfo.country}}</span></p>
+      <p>IP: <span class="text-teal-400">{{clientInfo.ip || 'Loading...'}}</span></p>
+      <p>Country: <span class="text-teal-400">{{clientInfo.country || 'Loading...'}}</span></p>
     </Gate>
   </div>
 
@@ -100,7 +100,7 @@
 
     <p class="text-gray-400">如有任何指令或驗證碼無法運作，請聯繫管理員或Proladon#7525</p>
 
-    <Dialog v-if="clientInfo.error" @manualCountry="updateCountry" />
+    <Dialog v-if="clientInfo.error" @manualCountry="updateCountry" @generate="generateToken" />
   </div>
 </template>
 
@@ -124,14 +124,14 @@ const cooling = reactive({
 })
 
 const clientInfo = reactive({
-  ip: "Loading...",
-  country: "Loading...",
+  ip: null,
+  country: null,
   error: false
 })
 
 
 const formData = reactive({
-  curGate: 1,
+  curGate: 4,
   inviteSource: [
     {
       name: '巴哈文章',
@@ -201,13 +201,13 @@ const selectSource = (index)=>{
 
 
 // 產生驗證碼
-const generateToken = async()=>{
+const generateToken = async( )=> {
   const id = formData.userID
-  const country = clientInfo.country.trim()
-  const source = formData.source
+  const country = clientInfo.country? clientInfo.country.trim() : null
+  const source = formData.source? formData.source.trim() : null
   const ip = clientInfo.ip
 
-  if (country === 'Loading...') {
+  if (!country) {
     clientInfo.error = true
     return
   }
@@ -215,22 +215,25 @@ const generateToken = async()=>{
   const check = idCheck()
   if(!check || cooling.isCooling) return
 
-
   token.value = "認證碼產生中...請稍後"
 
   // Call Encode API
   const [res, err] = await encode({
-    country,
+    country: country || 'Taiwan',
     id,
     source,
-    ip,
+    ip: ip || '0.0.0.0'
   })
+
   if(err) {
     console.log(err)
     token.value = "伺服器錯誤，請聯絡管理員"
+    
     return
   }
+
   token.value = res.data
+
   throttle() // 請求發送油門 (避免大量請求)
 }
 
@@ -336,7 +339,7 @@ const throttle = ()=>{
 }
 
 onMounted(()=>{
-  getClientInfo();
+  getClientInfo()
 
   axios.get(evnData.szData)
     .then(res=>{

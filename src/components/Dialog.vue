@@ -21,7 +21,7 @@ import countrys from '../assets/countrys.json'
 const countrysList = countrys.countrys
 const selectedCountry = ref(countrys.countrys[0])
 
-const emit = defineEmit(['manualCountry'])
+const emit = defineEmits(['manualCountry'])
 
 // confirm
 const selectCountry = (country) => {
@@ -29,6 +29,7 @@ const selectCountry = (country) => {
 }
 const confirm = () => {
     emit('manualCountry', selectedCountry.value)
+    emit('generate')
 }
 
 </script>
