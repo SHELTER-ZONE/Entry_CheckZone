@@ -202,10 +202,10 @@ const selectSource = (index)=>{
 
 // 產生驗證碼
 const generateToken = async( )=> {
-  const id = formData.userID
-  const country = null
-  const source = formData.source
-  const ip = null
+  const id = formData.userID;
+  const country = clientInfo.country.trim;
+  const source = formData.source;
+  const ip = clientInfo.ip;
 
   if (country === 'Loading...') {
     clientInfo.error = true
