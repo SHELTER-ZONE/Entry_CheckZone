@@ -131,7 +131,7 @@ const clientInfo = reactive({
 
 
 const formData = reactive({
-  curGate: 4,
+  curGate: 1,
   inviteSource: [
     {
       name: '巴哈文章',
